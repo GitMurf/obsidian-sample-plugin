@@ -15,7 +15,7 @@ module.exports = {
   // 'src/**/*.{ts,tsx,js,jsx,json}': ['eslint'],
 
   '**/*.{ts,tsx,js,jsx,json,html,css,scss,md,yaml,yml}': [
-    'prettier --check --ignore-unknown',
+    'prettier --write --ignore-unknown',
   ],
 
   // instead run tsc on push with pre-push hook
