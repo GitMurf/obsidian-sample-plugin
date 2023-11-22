@@ -14,10 +14,12 @@ module.exports = {
    */
   // 'src/**/*.{ts,tsx,js,jsx,json}': ['eslint'],
 
+  // instead run tsc on push with pre-push hook
+  // 'src/**/*.{ts,tsx}': [() => 'tsc --noEmit'],
+
   '**/*.{ts,tsx,js,jsx,json,html,css,scss,md,yaml,yml}': [
     'prettier --write --ignore-unknown',
   ],
 
-  // instead run tsc on push with pre-push hook
-  // 'src/**/*.{ts,tsx}': [() => 'tsc --noEmit'],
+  'src/**/*.{ts,tsx,js,jsx,json}': ['eslint --fix --max-warnings 0'],
 };
