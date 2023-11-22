@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 
-export const VITE_ROOT = join(__dirname);
+export const VITE_ROOT = join(__dirname, '..', '..');
 export const VITE_PATHS = {
   vitest: {
     testRoot: join(VITE_ROOT, '__tests__'),
