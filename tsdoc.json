@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+  "tagDefinitions": [
+    {
+      "tagName": "@Calhistorian",
+      "syntaxKind": "modifier"
+    },
+    {
+      "tagName": "@tabrew",
+      "syntaxKind": "modifier"
+    },
+    {
+      "tagName": "@GitMurf",
+      "syntaxKind": "modifier"
+    },
+    {
+      "tagName": "@phhq",
+      "syntaxKind": "modifier"
+    }
+  ]
+}
