@@ -1,10 +1,6 @@
 # vscode
 .vscode
 
-# Intellij
-*.iml
-.idea
-
 # npm
 node_modules
 
@@ -28,3 +24,4 @@ local/**/*
 .vite
 vite.log
 husky.log
+__tests__/__output__
