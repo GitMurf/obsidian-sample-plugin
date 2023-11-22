@@ -23,3 +23,7 @@ data.json
 
 # local stuff
 local/**/*
+
+# vite
+.vite
+vite.log
