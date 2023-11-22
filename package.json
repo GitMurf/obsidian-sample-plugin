@@ -13,6 +13,8 @@
     "release:beta": "TBD",
     "version": "node version-bump.js && git add manifest.json versions.json package.json",
     "typecheck": "tsc --noEmit -skipLibCheck",
+    "lint": "eslint --max-warnings 10 --ext .ts,.tsx .",
+    "lint:fix": "pnpm run lint --fix",
     "pre-commit": "pnpm run pre-commit:off",
     "pre-commit:off": "echo 'pre-commit hook is disabled'",
     "pre-commit:normal": "lint-staged",
