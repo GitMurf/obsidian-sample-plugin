@@ -16,6 +16,7 @@ import {
 } from './.config/vite/viteConstants';
 import { setupAliases } from './.config/vite/viteHelpers';
 import { copyPluginFilesToObsidian } from './.github/scripts/copyPluginFilesToObsidian';
+import { execSync } from 'node:child_process';
 
 const watcherOptions: BuildOptions['watch'] = {
   // How long to wait before triggering a rebuild for any file changes.
@@ -121,7 +122,21 @@ const finalResult: UserConfig = {
   // location for static files you just want purely copied to the build output.
   // maybe could use this for styles.css and manifest.json. outputs to outDir
   publicDir: join(VITE_ROOT, 'src/assets'),
-  plugins: [],
+  plugins: [
+    {
+      name: 'run-tsc-on-dev:copy-rebuild',
+      apply: 'build',
+      async buildStart() {
+        if (VITE_RUN_TYPE !== 'development-copy') return;
+        console.log('Running tsc before build...');
+        try {
+          execSync('pnpm run typecheck', { stdio: 'inherit' });
+        } catch (error) {
+          throw new Error('tsc failed, stopping the build');
+        }
+      },
+    },
+  ],
 };
 
 // console.log('VITE CONFIG:', JSON.stringify(finalResult, null, 2));
