@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { defineConfig, type UserConfig } from 'vite';
 import type { VitestTestGlobsEnvTuples } from './.config/vite/types';
-import { configDefaults } from 'vitest/dist/config';
+import { configDefaults } from 'vitest/config';
 // import type { UserConfig as VitestConfig } from 'vitest';
 
 const VITE_ROOT = join(__dirname);
