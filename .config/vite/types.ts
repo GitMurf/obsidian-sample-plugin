@@ -3,7 +3,7 @@ import type {
   UtilityObjectGetNestedUnion,
   UtilityObjectWritable,
   UtilityTupleChangeItemAtIndex,
-} from '../../src/utilityTypes/types';
+} from '../../src/types/utilityTypes/utilityTypes';
 import type { VitestEnvironment } from 'vitest';
 import tsConfig from '../../tsconfig.json';
 const tsAlias = tsConfig.compilerOptions.paths;

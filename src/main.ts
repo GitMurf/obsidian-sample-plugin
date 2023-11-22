@@ -1,39 +1,25 @@
-import {
-  App,
-  Editor,
-  MarkdownView,
-  Modal,
-  Notice,
-  Plugin,
-  PluginSettingTab,
-  Setting,
-} from 'obsidian';
-
-// Remember to rename these classes and interfaces!
-
-interface MyPluginSettings {
-  mySetting: string;
-}
-
-const DEFAULT_SETTINGS: MyPluginSettings = {
-  mySetting: 'default',
-};
+import type { App, Editor, MarkdownFileInfo } from 'obsidian';
+import { MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { DEFAULT_SETTINGS, PLUGIN_NAME } from './constants';
+import type { MyPluginSettings } from './types/mainTypes';
 
 export default class MyPlugin extends Plugin {
-  settings: MyPluginSettings;
+  settings: MyPluginSettings = DEFAULT_SETTINGS;
 
   async onload() {
+    console.log('Loading plugin: ' + PLUGIN_NAME);
     await this.loadSettings();
 
     // This creates an icon in the left ribbon.
     const ribbonIconEl = this.addRibbonIcon(
       'dice',
       'Sample Plugin',
-      (evt: MouseEvent) => {
+      (_evt: MouseEvent) => {
         // Called when the user clicks the icon.
         new Notice('This is a notice!');
       }
     );
+
     // Perform additional things with the ribbon
     ribbonIconEl.addClass('my-plugin-ribbon-class');
 
@@ -49,15 +35,19 @@ export default class MyPlugin extends Plugin {
         new SampleModal(this.app).open();
       },
     });
+
     // This adds an editor command that can perform some operation on the current editor instance
     this.addCommand({
       id: 'sample-editor-command',
       name: 'Sample editor command',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars -- If not using `view`, add a `_` before it like `_view`
+      editorCallback: (editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
         console.log(editor.getSelection());
         editor.replaceSelection('Sample Editor Command');
       },
     });
+
     // This adds a complex command that can check whether the current state of the app allows execution of the command
     this.addCommand({
       id: 'open-sample-modal-complex',
@@ -89,14 +79,25 @@ export default class MyPlugin extends Plugin {
 
     // When registering intervals, this function will automatically clear the interval when the plugin is disabled.
     this.registerInterval(
-      window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000)
+      window.setInterval(
+        () => {
+          console.log('setInterval');
+        },
+        5 * 60 * 1000
+      )
     );
   }
 
-  onunload() {}
+  onunload() {
+    console.log('Unloading plugin: ' + PLUGIN_NAME);
+  }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      await this.loadData()
+    ) as MyPluginSettings;
   }
 
   async saveSettings() {

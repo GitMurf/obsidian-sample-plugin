@@ -1,7 +1,7 @@
 /* eslint-disable tsdoc/syntax -- not worried about tsdoc syntax in this file */
 /* eslint-disable @typescript-eslint/naming-convention -- do not require Type naming conventions */
 
-import type { UtilityConvertStringToNumber } from './types';
+import type { UtilityConvertStringToNumber } from './utilityTypes';
 
 export type Sum<
   A extends NumberLike,

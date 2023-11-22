@@ -4,7 +4,7 @@ import type {
   UtilityNumberSum,
   UtilityTupleExclude,
   UtilityUnionToTuple,
-} from './types';
+} from './utilityTypes';
 
 export type SortTupleNumbers<
   TTuple,
