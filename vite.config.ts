@@ -3,27 +3,17 @@ import {
   defineConfig,
   type UserConfig,
   type ESBuildOptions,
-  type AliasOptions,
 } from 'vite';
 import builtins from 'builtin-modules';
 import { join } from 'node:path';
-import type { TypescriptAliasPaths } from './.config/vite/types';
-
-const viteRunArgsLast = process.argv[process.argv.length - 1] as
-  | 'development'
-  | 'production'
-  | 'test';
-const viteRunType =
-  ['development', 'production', 'test'].includes(viteRunArgsLast) ? viteRunArgsLast : (
-    undefined
-  );
-
-const IS_PROD = viteRunType === 'production';
-const IS_TEST = viteRunType === 'test';
-const IS_DEV = viteRunType === 'development' || !viteRunType;
-// IS_BUILD will always be true; Obsidian plugin dev does not need dev server
-const IS_BUILD = IS_PROD || IS_TEST || IS_DEV;
-const VITE_ROOT = join(__dirname);
+import {
+  IS_PROD,
+  IS_BUILD,
+  IS_DEV,
+  VITE_ROOT,
+  FULL_MINIFY_OBFUSCATE,
+} from './.config/vite/viteConstants';
+import { setupAliases } from './.config/vite/viteHelpers';
 
 const watcherOptions: BuildOptions['watch'] = {
   // How long to wait before triggering a rebuild for any file changes.
@@ -41,8 +31,6 @@ const watcherOptions: BuildOptions['watch'] = {
   //   interval: 100,
   // },
 };
-
-const FULL_MINIFY_OBFUSCATE = IS_PROD;
 
 const esbuildOptions: ESBuildOptions = {
   color: true,
@@ -120,28 +108,6 @@ const finalResult: UserConfig = {
   publicDir: join(VITE_ROOT, 'src/assets'),
   plugins: [],
 };
-
-function setupAliases() {
-  // these need to sync up with the tsconfig.json (type protected, so we will get errors if not)
-  const resolveAliasMapping: TypescriptAliasPaths = {
-    '@': 'src',
-    '@utils': 'src/utils',
-    '@assets': 'src/assets',
-    '@tests': '__tests__',
-  };
-  const resolveAliasConfig: AliasOptions = Object.keys(resolveAliasMapping).map(
-    (eachKey) => {
-      return {
-        find: eachKey,
-        replacement: join(
-          VITE_ROOT,
-          resolveAliasMapping[eachKey as keyof typeof resolveAliasMapping]
-        ),
-      };
-    }
-  );
-  return resolveAliasConfig;
-}
 
 // console.log('VITE CONFIG:', JSON.stringify(finalResult, null, 2));
 // https://vitejs.dev/config

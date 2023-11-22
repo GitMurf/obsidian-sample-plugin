@@ -1,19 +1,14 @@
+import {
+  configDefaults,
+  type UserConfig as VitestConfig,
+  defineConfig,
+} from 'vitest/config';
 import { join } from 'node:path';
-import { defineConfig, type UserConfig } from 'vite';
 import type { VitestTestGlobsEnvTuples } from './.config/vite/types';
-import { configDefaults } from 'vitest/config';
-// import type { UserConfig as VitestConfig } from 'vitest';
-
-const VITE_ROOT = join(__dirname);
-const VITE_PATHS = {
-  vitest: {
-    testRoot: join(VITE_ROOT, '__tests__'),
-    outputDirectory: join(VITE_ROOT, '__tests__', '__output__'),
-  },
-};
+import { VITE_PATHS } from './.config/vite/viteConstants';
 
 const vitestDefaults = configDefaults;
-const vitestConfigObject: UserConfig = {
+const vitestConfigObject: VitestConfig = {
   test: {
     dir: VITE_PATHS.vitest.testRoot,
 
@@ -90,5 +85,5 @@ const vitestConfigObject: UserConfig = {
   },
 };
 
-// console.log('vitest FINAL:', JSON.stringify(finalResult, null, 2));
+// console.log('vitest FINAL:', JSON.stringify(vitestConfigObject, null, 2));
 export default defineConfig(vitestConfigObject);
