@@ -12,8 +12,10 @@ import {
   IS_DEV,
   VITE_ROOT,
   FULL_MINIFY_OBFUSCATE,
+  VITE_RUN_TYPE,
 } from './.config/vite/viteConstants';
 import { setupAliases } from './.config/vite/viteHelpers';
+import { copyPluginFilesToObsidian } from './.github/scripts/copyPluginFilesToObsidian';
 
 const watcherOptions: BuildOptions['watch'] = {
   // How long to wait before triggering a rebuild for any file changes.
@@ -93,6 +95,19 @@ const finalResult: UserConfig = {
         // globals: {
         //   obsidian: 'obsidian',
         // },
+        plugins: [
+          {
+            name: 'copy-plugin-files-to-obsidian',
+            writeBundle() {
+              if (VITE_RUN_TYPE !== 'development-copy') return;
+              // copying plugin files to Obsidian vault plugin folder for testing
+              setTimeout(() => {
+                console.log('Copying plugin files to Obsidian vault plugin folder...');
+                copyPluginFilesToObsidian();
+              }, 2_000);
+            },
+          },
+        ],
       },
     },
     lib: {

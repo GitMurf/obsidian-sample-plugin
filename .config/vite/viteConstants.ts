@@ -10,16 +10,21 @@ export const VITE_PATHS = {
 
 const viteRunArgsLast = process.argv[process.argv.length - 1] as
   | 'development'
+  | 'development-copy'
   | 'production'
   | 'test';
 export const VITE_RUN_TYPE =
-  ['development', 'production', 'test'].includes(viteRunArgsLast) ? viteRunArgsLast : (
-    undefined
-  );
+  ['development', 'development-copy', 'production', 'test'].includes(viteRunArgsLast) ?
+    viteRunArgsLast
+  : undefined;
 
 export const IS_PROD = VITE_RUN_TYPE === 'production';
 const IS_TEST = VITE_RUN_TYPE === 'test';
-export const IS_DEV = VITE_RUN_TYPE === 'development' || !VITE_RUN_TYPE;
+export const IS_DEV =
+  VITE_RUN_TYPE === 'development' ||
+  VITE_RUN_TYPE === 'development-copy' ||
+  !VITE_RUN_TYPE;
+
 // IS_BUILD will always be true; Obsidian plugin dev does not need dev server
 export const IS_BUILD = IS_PROD || IS_TEST || IS_DEV;
 
