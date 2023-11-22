@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+  "name": "obsidian-sample-plugin",
   "version": "0.0.1",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+  "description": "This is a sample plugin for Obsidian (https://obsidian.md)",
   "main": "main.js",
   "type": "module",
   "scripts": {
@@ -13,6 +13,17 @@
     "release:beta": "TBD",
     "version": "node version-bump.js && git add manifest.json versions.json package.json",
     "typecheck": "tsc --noEmit -skipLibCheck",
+    "pre-commit": "pnpm run pre-commit:off",
+    "pre-commit:off": "echo 'pre-commit hook is disabled'",
+    "pre-commit:normal": "lint-staged",
+    "pre-commit:debug": "lint-staged --debug",
+    "commit-msg": "pnpm run commit-msg:off",
+    "commit-msg:off": "echo 'commit-msg hook is disabled'",
+    "commit-msg:normal": "commitlint --edit",
+    "commit-msg:debug": "commitlint --verbose --edit",
+    "pre-push": "pnpm run pre-push:off",
+    "pre-push:off": "echo 'pre-push hook is disabled'",
+    "pre-push:normal": "pnpm run typecheck",
     "prepare": "husky install"
   },
   "keywords": [],
