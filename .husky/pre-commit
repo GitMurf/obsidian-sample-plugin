@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+tsHuskyStartIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "" >> .husky/husky.log
+echo "[${tsHuskyStartIso}] Husky starting commit..." >> .husky/husky.log
+
+# if wanted, could run commitlint here to check commit message
+# the reason would be is pre-commit happens before commit-msg
+# so instead of waiting for eslint / prettier (longer to run) we get faster feedback
+# npx --no-install commitlint --edit ${1}
+
+tsStartSeconds=$(date +%s)
+tsStartIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+# echo "" >> .husky/husky.log
+echo "[${tsStartIso}] Husky > pre-commit: running lint-staged (eslint & prettier)" >> .husky/husky.log
+
+# Disabling temporarily for speed tests
+# echo "[${tsStartIso}] Husky > pre-commit: Husky pre-commit hook temporarily disabled" >> .husky/husky.log
+
+# change normal run vs debug in package.json script
+pnpm run pre-commit
+
+tsEndSeconds=$(date +%s)
+tsEndIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "[${tsEndIso}] Husky > pre-commit: pre-commit took $((tsEndSeconds-tsStartSeconds)) seconds" >> .husky/husky.log

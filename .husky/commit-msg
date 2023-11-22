@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+tsStartSeconds=$(date +%s)
+tsStartIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+# echo "" >> .husky/husky.log
+echo "[${tsStartIso}] Husky > commit-msg: linting commit message" >> .husky/husky.log
+
+# change normal run vs debug in package.json script
+pnpm run commit-msg ${1}
+
+# these also work (not sure if any difference)
+# npx --no -- commitlint --edit ${1}
+# npx --no-install -- commitlint --edit ${1}
+# npx --no-install commitlint --edit ${1}
+# these do NOT work
+# pnpm --no -- commitlint --edit ${1}
+# npm commitlint --edit ${1}
+
+tsEndSeconds=$(date +%s)
+tsEndIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "[${tsEndIso}] Husky > commit-msg: commit-msg took $((tsEndSeconds-tsStartSeconds)) seconds" >> .husky/husky.log

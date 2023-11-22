@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+tsHuskyStartIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "" >> .husky/husky.log
+echo "[${tsHuskyStartIso}] Husky starting git push..." >> .husky/husky.log
+
+tsStartSeconds=$(date +%s)
+tsStartIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+# echo "" >> .husky/husky.log
+echo "[${tsStartIso}] Husky > pre-push: Husky pre-push hook currently disabled" >> .husky/husky.log
+
+# when ready, update package.json pre-push script to run tsc type checking before code can be pushed
+# change normal run vs off (disabled) in package.json script
+pnpm run pre-push
+
+tsEndSeconds=$(date +%s)
+tsEndIso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo "[${tsEndIso}] Husky > pre-push: pre-push took $((tsEndSeconds-tsStartSeconds)) seconds" >> .husky/husky.log
